@@ -11,7 +11,7 @@ class Generator(nn.Module):
 
         self.l_emb = nn.Embedding(num_classes, embed_dim)
 
-        self.fc = nn.Linear(z_dim + embed_dim, 256 * 4 * 4)
+        self.fc = nn.Linear(z_dim + embed_dim, 256 * 2 * 2)
 
         self.dconv1 = nn.ConvTranspose2d(256, 128, kernel_size=4, stride=2, padding=1)
         self.dconv2 = nn.ConvTranspose2d(128, 64, kernel_size=4, stride=2, padding=1)
@@ -27,7 +27,7 @@ class Generator(nn.Module):
         x = torch.concat([z, l_emb], dim=1)
 
         x = F.relu(self.fc(x))
-        x = x.view(-1, 256, 4, 4)
+        x = x.view(-1, 256, 2, 2)
 
         x = F.relu(self.bn1(self.dconv1(x)))
         x = F.relu(self.bn2(self.dconv2(x)))
