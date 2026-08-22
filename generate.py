@@ -46,7 +46,7 @@ def generate_by_class(class_id, num_images=16, epoch=50, seed=None):
     plt.suptitle(f'Generated: {class_name} (class {class_id})', fontsize=14, fontweight='bold')
     plt.tight_layout()
     
-    save_path = f'{RESULT_DIR}/gan_class_{class_id}_{class_name}.png'
+    save_path = f'{RESULT_DIR}/gan_class_{class_id}_{class_name}_epoch_{epoch}.png'
     plt.savefig(save_path, dpi=150, bbox_inches='tight')
     plt.show()
     
@@ -150,4 +150,9 @@ if __name__ == '__main__':
     # generate_random(num_images=16, epoch=50, seed=42)
     
     # 3. Интерполяция между лягушкой (6) и лошадью (7)
-    interpolate_classes(class_id_1=6, class_id_2=7, num_steps=10, epoch=50, seed=42)
+    # interpolate_classes(class_id_1=6, class_id_2=7, num_steps=10, epoch=50, seed=42)
+
+    # В generate.py меняй параметр epoch:
+    generate_by_class(class_id=8, num_images=16, epoch=30, seed=42) # Грузовики на 30 эпохе
+    generate_by_class(class_id=8, num_images=16, epoch=40, seed=42) # Грузовики на 40 эпохе
+    generate_by_class(class_id=8, num_images=16, epoch=50, seed=42) # Грузовики на 50 эпохе

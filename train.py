@@ -31,8 +31,8 @@ def train():
             real_img = real_img.to(DEVICE)
             labels = labels.to(DEVICE)
 
-            real_labels = torch.ones(batch_size, device=DEVICE)
-            fake_labels = torch.zeros(batch_size, device=DEVICE)
+            real_labels = torch.ones(batch_size, device=DEVICE) * 0.9
+            fake_labels = torch.zeros(batch_size, device=DEVICE) + 0.1
 
             D.zero_grad()
             d_real = D(real_img, labels)

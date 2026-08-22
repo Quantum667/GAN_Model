@@ -1,7 +1,7 @@
 import os
 import torch
 
-Z_DIM = 128
+Z_DIM = 256
 NUM_CLASSES = 10
 EMBED_DIM = 50
 IMG_SIZE = 32
