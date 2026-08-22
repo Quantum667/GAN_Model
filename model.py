@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.nn.utils.spectral_norm as spectral_norm
 
 from config import Z_DIM, NUM_CLASSES, EMBED_DIM
 
@@ -42,14 +43,14 @@ class Discriminator(nn.Module):
         super().__init__()
 
         self.l_emb = nn.Embedding(num_classes, embed_dim)
-        self.conv1 = nn.Conv2d(3, 32, kernel_size=4, stride=2, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1)
-        self.conv3 = nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1)
+        self.conv1 = spectral_norm(nn.Conv2d(3, 32, kernel_size=4, stride=2, padding=1))
+        self.conv2 = spectral_norm(nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1))
+        self.conv3 = spectral_norm(nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1))
 
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(128)
 
-        self.fc = nn.Linear(128 * 4 * 4 + embed_dim, 1)
+        self.fc = spectral_norm(nn.Linear(128 * 4 * 4 + embed_dim, 1))
 
     def forward(self, x, labels):
         l_emb = self.l_emb(labels)
