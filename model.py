@@ -6,6 +6,26 @@ import torch.nn.utils.spectral_norm as spectral_norm
 from config import Z_DIM, NUM_CLASSES, EMBED_DIM
 
 
+class MinibatchDiscrimination(nn.Module):
+    def __init__(self, in_f, out_f, k_size):
+        super().__init__()
+        self.in_f = in_f
+        self.out_f = out_f
+        self.k_size = k_size
+
+        self.T = nn.Parameter(torch.randn(in_f, out_f, k_size))
+
+    def forward(self, x):
+        M = torch.matmul(x, self.T.view(self.in_f, -1))
+        M = M.view(-1, self.out_f, self.k_size)
+
+        diff = M.unsqueeze(0) - M.unsqueeze(1)
+        distances = torch.sum(torch.abs(diff), dim=3)
+
+        o = torch.sum(torch.exp(-distances), dim=1)
+
+        return torch.cat([x, o], dim=1)
+
 class Generator(nn.Module):
     def __init__(self, z_dim=Z_DIM, num_classes=NUM_CLASSES, embed_dim=EMBED_DIM):
         super().__init__()
@@ -50,7 +70,9 @@ class Discriminator(nn.Module):
         self.bn1 = nn.BatchNorm2d(64)
         self.bn2 = nn.BatchNorm2d(128)
 
-        self.fc = spectral_norm(nn.Linear(128 * 4 * 4 + embed_dim, 1))
+        self.minibatch = MinibatchDiscrimination(128*4*4, 16, 8)
+
+        self.fc = spectral_norm(nn.Linear(128 * 4 * 4 + 16 + embed_dim, 1))
 
     def forward(self, x, labels):
         l_emb = self.l_emb(labels)
@@ -60,7 +82,11 @@ class Discriminator(nn.Module):
         x = F.leaky_relu(self.bn2(self.conv3(x)), 0.2)
 
         x = x.view(x.size(0), -1)
+
+        x = self.minibatch(x)
+
         x = torch.cat([x, l_emb], dim=1)
+
         x = torch.sigmoid(self.fc(x))
 
         return x.squeeze()

@@ -9,7 +9,7 @@ CHANNELS = 3
 
 BATCH_SIZE = 128
 EPOCHS = 50
-LR = 0.0002
+LR = 0.0001
 BETA1 = 0.5
 BETA2 = 0.999
 NUM_WORKERS = 0 if torch.cuda.is_available() == False else 4
