@@ -12,6 +12,7 @@ EPOCHS = 50
 LR = 0.0002
 BETA1 = 0.5
 BETA2 = 0.999
+NUM_WORKERS = 0 if torch.cuda.is_available() == False else 4
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
