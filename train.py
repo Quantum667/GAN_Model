@@ -88,7 +88,7 @@ def train():
         avg_loss_G = epoch_loss_G / len(train_data)
         avg_gp = epoch_gp / len(train_data)
 
-        print(f'Epoch {epoch+1:03d}/{EPOCHS} | Loss D: {avg_loss_D:.4f} | Loss G: {avg_loss_G:.4f}')
+        print(f'Epoch {epoch+1:03d}/{EPOCHS} | Loss D: {avg_loss_D:.4f} | Loss G: {avg_loss_G:.4f}| Loss gp: {avg_gp:.4f}')
         
         if (epoch + 1) % 10 == 0 or (epoch + 1) == EPOCHS:
             torch.save(G.state_dict(), f'{SAVE_DIR}/generator_epoch_{epoch+1}.pth')
