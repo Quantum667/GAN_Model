@@ -87,10 +87,5 @@ class Discriminator(nn.Module):
 
         x = torch.cat([x, l_emb], dim=1)
 
-        x = torch.sigmoid(self.fc(x))
-
         return x.squeeze()
-
-def loss_function():
-    return nn.BCELoss()
 
