@@ -48,7 +48,7 @@ class Discriminator(nn.Module):
         self.conv3 = spectral_norm(nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1))
 
 
-        self.fc = spectral_norm(nn.Linear(128 * 4 * 4  + embed_dim, 1))
+        self.fc = spectral_norm(nn.Linear(128 * 4 * 4  + embed_dim, 1, bias=False))
 
     def forward(self, x, labels):
         l_emb = self.l_emb(labels)
