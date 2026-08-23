@@ -87,5 +87,7 @@ class Discriminator(nn.Module):
 
         x = torch.cat([x, l_emb], dim=1)
 
+        x = self.fc(x)
+
         return x.squeeze()
 
