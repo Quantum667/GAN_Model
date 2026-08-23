@@ -9,11 +9,11 @@ CHANNELS = 3
 
 BATCH_SIZE = 128
 EPOCHS = 50
-LR = 0.0001
+LR = 0.00002
 BETA1 = 0.0
 BETA2 = 0.9
 NUM_WORKERS = 0 if torch.cuda.is_available() == False else 4
-N_CRITIC = 5
+N_CRITIC = 7
 LAMBDA_GP = 10.0
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
