@@ -153,8 +153,8 @@ if __name__ == '__main__':
     # interpolate_classes(class_id_1=6, class_id_2=7, num_steps=10, epoch=50, seed=42)
 
     # В generate.py меняй параметр epoch:
-    # generate_by_class(class_id=8, num_images=16, epoch=10, seed=42)
+    generate_by_class(class_id=8, num_images=16, epoch=10, seed=42)
     # generate_by_class(class_id=8, num_images=16, epoch=30, seed=42) # Грузовики на 30 эпохе
     # generate_by_class(class_id=8, num_images=16, epoch=40, seed=42) # Грузовики на 40 эпохе
     # generate_by_class(class_id=8, num_images=16, epoch=50, seed=42) # Грузовики на 50 эпохе
-    pass
+    # pass
