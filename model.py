@@ -67,9 +67,6 @@ class Discriminator(nn.Module):
         self.conv2 = spectral_norm(nn.Conv2d(32, 64, kernel_size=4, stride=2, padding=1))
         self.conv3 = spectral_norm(nn.Conv2d(64, 128, kernel_size=4, stride=2, padding=1))
 
-        self.bn1 = nn.BatchNorm2d(64)
-        self.bn2 = nn.BatchNorm2d(128)
-
         self.minibatch = MinibatchDiscrimination(128*4*4, 16, 8)
 
         self.fc = spectral_norm(nn.Linear(128 * 4 * 4 + 16 + embed_dim, 1))
@@ -78,8 +75,8 @@ class Discriminator(nn.Module):
         l_emb = self.l_emb(labels)
 
         x = F.leaky_relu(self.conv1(x), 0.2)
-        x = F.leaky_relu(self.bn1(self.conv2(x)), 0.2)
-        x = F.leaky_relu(self.bn2(self.conv3(x)), 0.2)
+        x = F.leaky_relu(self.conv2(x), 0.2)
+        x = F.leaky_relu(self.conv3(x), 0.2)
 
         x = x.view(x.size(0), -1)
 

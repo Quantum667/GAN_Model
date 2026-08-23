@@ -60,7 +60,7 @@ def train():
                 loss_real = -torch.mean(pred_real)
 
                 z = torch.randn(batch_size, Z_DIM, device=DEVICE)
-                fake_img = G(z, labels)
+                fake_img = G(z, labels).detach()
                 pred_fake = D(fake_img, labels)
                 loss_fake = torch.mean(pred_fake)
 
