@@ -16,7 +16,7 @@ def compute_gradient_penalty(D, real_samples, fake_samples, labels):
 
     d_interpolate = D(interpolates, labels)
 
-    fake = torch.ones_like(real_samples.size(0), 1, device=DEVICE)
+    fake = torch.ones_like(d_interpolate)
     gradients = torch.autograd.grad(
         outputs=d_interpolate,
         inputs=interpolates,
